@@ -1,0 +1,16 @@
+# Ignore the data directory completely
+data/
+
+# Ignore specific data file formats just in case they are left in the main folder
+*.csv
+*.mat
+*.bin
+*.parquet
+*.h5
+*.xlsx
+
+# Ignore Python environemnt and cache folders (just in case) 
+__pychache__/
+.venv/
+.env
+.ipynb_checkpoints/
