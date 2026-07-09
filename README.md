@@ -8,4 +8,12 @@ Need to add instructions on how to use the software, what needs downloading to u
 
 
 
+
+
+pip install pandas numpy mat73
+
+
+
+
+
 This project is licensed under the MIT Liscense - see the LICENSE file for complete details.

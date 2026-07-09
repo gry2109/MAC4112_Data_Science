@@ -19,7 +19,7 @@ def feature_extraction(file_path, condition_label):
     dataset = mat[struct_name]
 
     # Define list of sensors we want to extract features from
-    sensors = ['PlateHFAccZ', 'SpindleAccX', 'SpindleAccY', 'SpindleAccZ', 'Power']
+    sensor_list = ['PlateHFAccZ', 'SpindleAccX', 'SpindleAccY', 'SpindleAccZ', 'Power']
     extracted_features = []
     num_runs = len(dataset['PlateHFAccZ'])
     
