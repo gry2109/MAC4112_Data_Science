@@ -11,7 +11,7 @@ results/
 *.xlsx
 
 # Ignore Python environemnt and cache folders (just in case) 
-__pychache__/
+__pycache__/
 .venv/
 .env
 .ipynb_checkpoints/
