@@ -19,8 +19,33 @@ def feature_scaling(df, feature_cols):
     ################### This must be rmeoved when code is moved to pipline to be ran by main.py. main.py will handle creation of CSV files 
     # 4. Save the cleaned data to a new CSV file
     output_path = 'results/master_features_standardised.csv'
-    df_cleaned.to_csv(output_path, index=False)
+    df_scaled.to_csv(output_path, index=False)
     print(f"Standardised data saved to {output_path}")   
 
 
     return df_scaled
+
+
+if __name__ == "__main__":
+    print("Running standalone feature scaling test...")
+    
+    # 1. Load your raw extracted features 
+    # (Adjust this path if your master features file is named differently!)
+    input_path = "results/master_features_cleaned.csv"
+    try:
+        df_raw = pd.read_csv(input_path)
+        
+        # 2. Isolate just the numeric columns for scaling
+        metadata_cols = ['Run_Number', 'Target_Condition']
+        features_to_scale = [col for col in df_raw.columns if col not in metadata_cols]
+        
+        # 3. Call your function!
+        feature_scaling(df=df_raw, feature_cols=features_to_scale)
+        
+    except FileNotFoundError:
+        print(f"Error: Could not find '{input_path}'. Make sure your feature extraction script ran first!")
+        
+    # 4. Save the cleaned data to a new CSV file
+    output_path = 'results/master_features_standardised.csv'
+    df_scaled.to_csv(output_path, index=False)
+    print(f"Standardised data saved to {output_path}")   
