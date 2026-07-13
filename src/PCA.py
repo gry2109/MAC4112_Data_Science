@@ -44,21 +44,23 @@ def plot_pca(df_pca, variance_ratio):
     df_pca (pd.DataFrame): The DataFrame containing principal components and identity columns.
     variance_ratio (list): List of explained variance ratios for each principal component.
     """
-    plt.figure(figsize=(10, 7))
-    
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
     # colour code the plot
     conditions = df_pca['Target_Condition'].unique()
     palette = sns.color_palette("hsv", len(conditions)) 
 
     for cond, colour in zip(conditions, palette):
         subset = df_pca[df_pca['Target_Condition'] == cond]
-        plt.scatter(subset['PC1'], subset['PC2'], label=cond, alpha=0.7, color=colour)
+        ax.scatter(subset['PC1'], subset['PC2'], label=cond, alpha=0.7, color=colour)
 
         # labels on the axis
-        plt.xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
-        plt.ylabel(f'PC2 ({variance_ratio[1]*100:.1f}% variance)')
-        plt.title('PCA of Extracted Features')
-        plt.legend()
+        ax.set_xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
+        ax.set_ylabel(f'PC2 ({variance_ratio[1]*100:.1f}% variance)')
+        ax.set_title('PCA of Extracted Features')
+        ax.legend()
+        ax.grid(True)
         plt.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
         plt.close()
         print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
