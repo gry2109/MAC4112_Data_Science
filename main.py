@@ -10,11 +10,13 @@ def main():
     df_baseline = feature_extraction('data/Segmented_Linear_Baseline.mat', 'Baseline')      # this is what should be a command line interface to choose whtehr you want linear, machining etc. 
     
     # 2. Process a Faulty file (Let's use Misalignment as an example)
-    df_misaligned = feature_extraction('data/Segmented_Linear_Heavy.mat', 'Heavy')
+    df_heavy = feature_extraction('data/Segmented_Linear_Heavy.mat', 'Heavy')
+
+    df_override = feature_extraction('data/Segmented_Linear_Override.mat', 'Override')
     
     # 3. Combine them into one master dataset
     print("Combining datasets...")
-    master_dataset = pd.concat([df_baseline, df_misaligned], ignore_index=True)
+    master_dataset = pd.concat([df_baseline, df_heavy, df_override], ignore_index=True)
     
     # 4. Save the final table as a CSV so we can easily look at it
     output_path = 'results/master_features.csv'
