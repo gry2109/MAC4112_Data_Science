@@ -29,11 +29,14 @@ def main():
 
     ### Cleaning process ###
     print("Starting data cleaning process...")
-
+    # 1. Call function and pass the master dataset to it, then output to a CSV file 
     df_cleaned = clean_data_only(master_dataset)
     df_cleaned.to_csv('results/master_features_cleaned.csv', index=False)
     print(f"Data cleaning complete! Cleaned dataset saved to 'results/master_features_cleaned.csv'")
 
+
+##### Tomorrow, add the standardised and PCA function calls here to complete the set
+##### May need to review what features I am extracting from the dataset from within the features function
 
 
 
