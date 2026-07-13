@@ -52,14 +52,24 @@ def feature_extraction(file_path, condition_label):
             
             # 3. If found mathc, extract features
             if resolved_key is not None:
-                wave = dataset[resolved_key][i] # Pull the data using the EXACT name found in the file
-                run_features[f'{standard_name}_Mean'] = np.mean(wave)
-                run_features[f'{standard_name}_RMS'] = np.sqrt(np.mean(wave**2))
-                run_features[f'{standard_name}_Max_Peak'] = np.max(np.abs(wave))
-                run_features[f'{standard_name}_Skewness'] = skew(wave)
-                run_features[f'{standard_name}_Kurtosis'] = kurtosis(wave)
+                wave = dataset[resolved_key][i]
+                
+                # NEW SAFETY CHECK: Ensure the wave is not None and has actual data points
+                if wave is not None and np.size(wave) > 1:
+                    run_features[f'{standard_name}_Mean'] = np.mean(wave)
+                    run_features[f'{standard_name}_RMS'] = np.sqrt(np.mean(wave**2))
+                    run_features[f'{standard_name}_Max_Peak'] = np.max(np.abs(wave))
+                    run_features[f'{standard_name}_Skewness'] = skew(wave)
+                    run_features[f'{standard_name}_Kurtosis'] = kurtosis(wave)
+                else:
+                    # The sensor exists, but THIS specific run is totally empty
+                    run_features[f'{standard_name}_Mean'] = np.nan
+                    run_features[f'{standard_name}_RMS'] = np.nan
+                    run_features[f'{standard_name}_Max_Peak'] = np.nan
+                    run_features[f'{standard_name}_Skewness'] = np.nan
+                    run_features[f'{standard_name}_Kurtosis'] = np.nan
             else:
-                # 4. Only fill with NaNs if the sensor is genuinely missing
+                # 4. The sensor is entirely missing from the file
                 run_features[f'{standard_name}_Mean'] = np.nan
                 run_features[f'{standard_name}_RMS'] = np.nan
                 run_features[f'{standard_name}_Max_Peak'] = np.nan
