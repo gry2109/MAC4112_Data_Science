@@ -18,6 +18,8 @@ def clean_data_only(results_dir):
     features_cleaned = pd.DataFrame(features_array, columns=data_features.columns)
     df_cleaned = pd.concat([data_identity, features_cleaned], axis=1)
 
+
+    ################### This must be rmeoved when code is moved to pipline to be ran by main.py. main.py will handle creation of CSV files 
     # 4. Save the cleaned data to a new CSV file
     output_path = 'results/master_features_cleaned.csv'
     df_cleaned.to_csv(output_path, index=False)
