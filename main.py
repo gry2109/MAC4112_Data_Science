@@ -7,10 +7,10 @@ from src.features import feature_extraction
 def main():
     print("Starting feature extraction process...")
     # 1. Process a Healthy Baseline file
-    df_baseline = feature_extraction('data/Segmented_Linear_Baseline.mat', 'Baseline')
+    df_baseline = feature_extraction('data/Segmented_Linear_Baseline.mat', 'Baseline')      # this is what should be a command line interface to choose whtehr you want linear, machining etc. 
     
     # 2. Process a Faulty file (Let's use Misalignment as an example)
-    df_misaligned = feature_extraction('data/Segmented_Machining_Misalignment.mat', 'Misalignment')
+    df_misaligned = feature_extraction('data/Segmented_Linear_Heavy.mat', 'Heavy')
     
     # 3. Combine them into one master dataset
     print("Combining datasets...")
