@@ -16,4 +16,11 @@ def feature_scaling(df, feature_cols):
     df_scaled = df.copy()
     df_scaled[feature_cols] = scaler.fit_transform(df[feature_cols])
     
+    ################### This must be rmeoved when code is moved to pipline to be ran by main.py. main.py will handle creation of CSV files 
+    # 4. Save the cleaned data to a new CSV file
+    output_path = 'results/master_features_standardised.csv'
+    df_cleaned.to_csv(output_path, index=False)
+    print(f"Standardised data saved to {output_path}")   
+
+
     return df_scaled
