@@ -3,6 +3,11 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 
 def clean_data_only(results_dir):
+     """
+    Reads the csv file master_features from the results directory, cleans the data by 
+    imputing missing values with the mean of each column, and saves the cleaned data 
+    to a new CSV file.
+    """
     print("Starting data cleaning process...")
     # 1 load data for the cleaning process. This comes from the features definition executed in main.py
     data_path = os.path.join(results_dir, 'master_features.csv')
