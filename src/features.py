@@ -49,18 +49,24 @@ def feature_extraction(file_path, condition_label):
                 if alias in available_sensors:
                     resolved_key = alias
                     break 
-            
-            # 3. If found mathc, extract features
+
+            # 3. If found match, extract features
             if resolved_key is not None:
-                wave = dataset[resolved_key][i]
+                # This must be INDENTED under the if statement
+                sensor_data = dataset[resolved_key][i]
                 
-                # NEW SAFETY CHECK: Ensure the wave is not None and has actual data points
-                if wave is not None and np.size(wave) > 1:
-                    run_features[f'{standard_name}_Mean'] = np.mean(wave)
-                    run_features[f'{standard_name}_RMS'] = np.sqrt(np.mean(wave**2))
-                    run_features[f'{standard_name}_Max_Peak'] = np.max(np.abs(wave))
-                    run_features[f'{standard_name}_Skewness'] = skew(wave)
-                    run_features[f'{standard_name}_Kurtosis'] = kurtosis(wave)
+                if sensor_data is not None and np.size(sensor_data) > 1:
+                    sensor_data = np.array(sensor_data)
+                    
+                    if standard_name == 'Power':
+                        sensor_data = np.hstack(sensor_data).flatten()
+                        sensor_data = ((sensor_data * 2500) / 10) * 3
+                    
+                    run_features[f'{standard_name}_Mean'] = np.mean(sensor_data)
+                    run_features[f'{standard_name}_RMS'] = np.sqrt(np.mean(sensor_data**2))
+                    run_features[f'{standard_name}_Max_Peak'] = np.max(np.abs(sensor_data))
+                    run_features[f'{standard_name}_Skewness'] = skew(sensor_data)
+                    run_features[f'{standard_name}_Kurtosis'] = kurtosis(sensor_data)
                 else:
                     # The sensor exists, but THIS specific run is totally empty
                     run_features[f'{standard_name}_Mean'] = np.nan
