@@ -1,7 +1,7 @@
 # Ignore the data directory completely
 data/
 results/
-
+__pycache__/
 # Ignore specific data file formats just in case they are left in the main folder
 *.csv
 *.mat

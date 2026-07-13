@@ -19,7 +19,12 @@ def feature_extraction(file_path, condition_label):
     dataset = mat[struct_name]
 
     # Define list of sensors we want to extract features from
-    sensor_list = ['PlateHFAccZ', 'SpindleAccX', 'SpindleAccY', 'SpindleAccZ', 'Power']
+    sensor_list = {'PlateHFAccZ': ['PlateHFAccZ'],
+                    'SpindleAccX': ['SpindleAccX', 'SpindleX'],
+                    'SpindleAccY': ['SpindleAccY', 'SpindleY'],
+                    'SpindleAccZ': ['SpindleAccZ', 'SpindleZ'],
+                    'Power': ['Power'],
+                    'Load': ['SpindleLoad'],}
     extracted_features = []
     
     
@@ -35,21 +40,31 @@ def feature_extraction(file_path, condition_label):
             'Run_Number': i + 1,
             'Target_Condition': condition_label
         }
-        #add check to see if the sensor is in the available sensors, if not skip it
-        for sensor in sensor_list:
-            if sensor in available_sensors:
-                wave = dataset[sensor][i]
-                run_features[f'{sensor}_Mean'] = np.mean(wave)
-                run_features[f'{sensor}_RMS'] = np.sqrt(np.mean(wave**2))
-                run_features[f'{sensor}_Max_Peak'] = np.max(np.abs(wave))
-                run_features[f'{sensor}_Skewness'] = skew(wave)
-                run_features[f'{sensor}_Kurtosis'] = kurtosis(wave)
+       # 1. Unpack BOTH the standard name and the list of aliases
+        for standard_name, aliases in sensor_list.items():
+            resolved_key = None # This will hold the actual name we find in the file
+            
+            # 2. Check if any of our known alternative names exist in this specific file
+            for alias in aliases:
+                if alias in available_sensors:
+                    resolved_key = alias
+                    break 
+            
+            # 3. If found mathc, extract features
+            if resolved_key is not None:
+                wave = dataset[resolved_key][i] # Pull the data using the EXACT name found in the file
+                run_features[f'{standard_name}_Mean'] = np.mean(wave)
+                run_features[f'{standard_name}_RMS'] = np.sqrt(np.mean(wave**2))
+                run_features[f'{standard_name}_Max_Peak'] = np.max(np.abs(wave))
+                run_features[f'{standard_name}_Skewness'] = skew(wave)
+                run_features[f'{standard_name}_Kurtosis'] = kurtosis(wave)
             else:
-                run_features[f'{sensor}_Mean'] = np.nan
-                run_features[f'{sensor}_RMS'] = np.nan
-                run_features[f'{sensor}_Max_Peak'] = np.nan
-                run_features[f'{sensor}_Skewness'] = np.nan
-                run_features[f'{sensor}_Kurtosis'] = np.nan
+                # 4. Only fill with NaNs if the sensor is genuinely missing
+                run_features[f'{standard_name}_Mean'] = np.nan
+                run_features[f'{standard_name}_RMS'] = np.nan
+                run_features[f'{standard_name}_Max_Peak'] = np.nan
+                run_features[f'{standard_name}_Skewness'] = np.nan
+                run_features[f'{standard_name}_Kurtosis'] = np.nan
         extracted_features.append(run_features)
         
     return pd.DataFrame(extracted_features)
@@ -57,5 +72,3 @@ def feature_extraction(file_path, condition_label):
 
 
 
-#After weekend, need to change feature code so that we're looking for heading names that are 
-# for the same sonsors but have been called a different name
