@@ -58,10 +58,12 @@ def plot_pca(df_pca, variance_ratio):
         # labels on the axis
         ax.set_xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
         ax.set_ylabel(f'PC2 ({variance_ratio[1]*100:.1f}% variance)')
+        ax.set_zlabel(f'PC3 ({variance_ratio[2]*100:.1f}% variance)')
         ax.set_title('PCA of Extracted Features')
         ax.legend()
         ax.grid(True)
-        plt.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
+        ax.view_init(elev=20, azim=30)  # Adjust the viewing angle for better visualization
+        fig.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
         plt.close()
         print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
 
