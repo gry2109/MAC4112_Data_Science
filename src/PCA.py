@@ -44,7 +44,7 @@ def plot_pca(df_pca, variance_ratio):
     df_pca (pd.DataFrame): The DataFrame containing principal components and identity columns.
     variance_ratio (list): List of explained variance ratios for each principal component.
     """
-    fig = plt.figure(figsize=(10, 7))
+    fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
 
     # colour code the plot
