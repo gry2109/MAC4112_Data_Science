@@ -5,6 +5,7 @@ from src.clean_data import clean_data_only
 from src.Standardise import feature_scaling
 from src.PCA import perform_pca
 from src.PCA import plot_pca
+from src.remove_outliers import remove_outliers
 
 
 
@@ -93,10 +94,16 @@ def main():
     df_standardised = feature_scaling(df_cleaned, feature_cols_cleaned)
     df_standardised.to_csv('results/master_features_standardised.csv', index=False)
 
+    ### Filter anomalous runs ###
+    print("Starting outlier removal...")
+    feature_cols_standardised = [col for col in df_standardised.columns if col not in ['Run_Number', 'Target_Condition']]
+    df_no_outliers = remove_outliers(df_standardised, feature_cols_standardised)
+    df_no_outliers.to_csv('results/master_features_no_outliers.csv', index=False)
+
     ### PCA ###
     print("Starting PCA process...")
-    feature_cols_standardised = [col for col in df_standardised.columns if col not in ['Run_Number', 'Target_Condition']]
-    df_pca, variance_ratio = perform_pca(df_standardised, feature_cols_standardised, n_components=3)
+    feature_cols_no_outliers = [col for col in df_no_outliers.columns if col not in ['Run_Number', 'Target_Condition']]
+    df_pca, variance_ratio = perform_pca(df_standardised, feature_cols_no_outliers, n_components=3)
     df_pca.to_csv('results/master_pca_features.csv', index=False)
     
     plot_pca(df_pca, variance_ratio)
