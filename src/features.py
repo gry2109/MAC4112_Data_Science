@@ -7,6 +7,16 @@ from scipy.stats import skew, kurtosis
 from scipy.signal import stft
 
 
+def get_feature_cols(df, exclude=['Run_Number', 'Target_Condition']):
+     """
+     Return a list of all column names in the data frame, excluding metadata.
+     """
+     return [col for col in df.columns if col not in exclude]
+
+
+
+
+
 
 def feature_extraction(file_path, condition_label):
     """
