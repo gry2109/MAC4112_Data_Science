@@ -32,7 +32,33 @@ def main():
 
     selected_DS = [] 
 
-    print("\nPlease input the datasets you wish to run")
+    print("\nPlease input the datasets you wish to run.")
+    print("Select either the dataset name or number from the list above. Press enter when done.")
+    while True:
+        user_input = input("\nEnter filename/number and press enter to finish.")
+        # make sure user entered appropriate number of datasets 
+        if user_input == "":
+            if len(selected_DS) <2:
+                print("\nYOu must select more thna one dataset for comparison")
+                continue
+            break
+         # check user inputed dataset mathcin list 
+        if user_input.isdigit() and 1 <= int(user_input) <= len(available_DS):
+            filename = available_DS[int(user_input)-1]
+        else:
+            filename = user_input if user_input.endswith('.mat') else f"{user_input}"
+        # Verfiy name is in file
+        full_file_path = os.path.join(DATA_DIRECTORY, filename)
+        if os.path.exists(full_file_path):
+            if filename not in selected_DS:
+                selected_DS.append(filename)
+                print(f"Added: {filename}")
+            else:
+                print("File already added to the list.")
+        else:
+            print(f"Error: '{filename}' not found in '{DATA_DIRECTORY}/'. Please check spelling.")
+
+        
 
    
    
