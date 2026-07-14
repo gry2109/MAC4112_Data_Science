@@ -19,7 +19,7 @@ def main():
     
     DATA_DIRECTORY = 'data/'
     if not os.path.exists(DATA_DIRECTORY):
-        print("Data directory '{DATA_DIRECTORY}' does not exist. Please ensure the data files are in the correct location.")
+        print(f"Data directory '{DATA_DIRECTORY}' does not exist. Please ensure the data files are in the correct location.")
         return
     available_DS = [f for f in os.listdir(DATA_DIRECTORY) if f.endswith('.mat')]
     if not available_DS:
@@ -35,7 +35,7 @@ def main():
     print("\nPlease input the datasets you wish to run.")
     print("Select either the dataset name or number from the list above. Press enter when done.")
     while True:
-        user_input = input("\nEnter filename/number and press enter to finish.")
+        user_input = input("\nEnter filename/number and press enter to finish.  ")
         # make sure user entered appropriate number of datasets 
         if user_input == "":
             if len(selected_DS) <2:
@@ -58,24 +58,21 @@ def main():
         else:
             print(f"Error: '{filename}' not found in '{DATA_DIRECTORY}/'. Please check spelling.")
 
-        
-
-   
-   
-   
-   
-   
-   
     ### Feature extraction process ###
-    print("Starting feature extraction process...")
+    
     # 1. Process the files to conduct the aalysis on
-    df_baseline = feature_extraction('data/Segmented_Linear_Baseline.mat', 'Baseline')      # this is what should be a command line interface to choose whtehr you want linear, machining etc.
-    df_heavy = feature_extraction('data/Segmented_Linear_Heavy.mat', 'Heavy')
-    df_override = feature_extraction('data/Segmented_Linear_Override.mat', 'Override')
-
-    # 2. Combine them into one master dataset
-    print("Combining datasets...")
-    master_dataset = pd.concat([df_baseline, df_heavy, df_override], ignore_index=True)
+    print("Starting feature extraction process...")
+    DS_dict = {}
+    for filename in selected_DS:
+        full_file_path = os.path.join(DATA_DIRECTORY, filename)
+        condition_label = filename.replace('Segmented_', '').replace('_', ' ').replace('.mat', '').title()
+        print(f"Processing: {filename}, LAbelled as: '{condition_label}'")
+        df_feat = feature_extraction(full_file_path, condition_label)
+        DS_dict[condition_label] = df_feat
+    
+    # 2. Combine the datasets 
+    print("\nCombining selected datasets...")
+    master_dataset = pd.concat(DS_dict.values(), ignore_index=True)
 
     # 3. Save the final table as a CSV so we can easily look at it
     output_path = 'results/master_features.csv'
