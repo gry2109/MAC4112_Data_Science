@@ -67,6 +67,9 @@ def plot_pca(df_pca, variance_ratio):
     plt.show()
     plt.close()
     print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
+    print("Explained variance ratio per component:", variance_ratio)
+    print("Total explained variance:", sum(variance_ratio))
+
 
 
 if __name__ == "__main__":
