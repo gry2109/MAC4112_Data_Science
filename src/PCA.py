@@ -55,18 +55,18 @@ def plot_pca(df_pca, variance_ratio):
         subset = df_pca[df_pca['Target_Condition'] == cond]
         ax.scatter(subset['PC1'], subset['PC2'], label=cond, alpha=0.7, color=colour)
 
-        # labels on the axis
-        ax.set_xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
-        ax.set_ylabel(f'PC2 ({variance_ratio[1]*100:.1f}% variance)')
-        ax.set_zlabel(f'PC3 ({variance_ratio[2]*100:.1f}% variance)')
-        ax.set_title('PCA of Extracted Features')
-        ax.legend()
-        ax.grid(True)
-        ax.view_init(elev=20, azim=30)  # Adjust the viewing angle for better visualization
-        fig.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        plt.close()
-        print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
+    # labels on the axis
+    ax.set_xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
+    ax.set_ylabel(f'PC2 ({variance_ratio[1]*100:.1f}% variance)')
+    ax.set_zlabel(f'PC3 ({variance_ratio[2]*100:.1f}% variance)')
+    ax.set_title('PCA of Extracted Features')
+    ax.legend()
+    ax.grid(True)
+    ax.view_init(elev=20, azim=30)  # Adjust the viewing angle for better visualization
+    fig.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    plt.close()
+    print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
 
 
 if __name__ == "__main__":
