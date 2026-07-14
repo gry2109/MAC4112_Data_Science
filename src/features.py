@@ -1,8 +1,11 @@
 
 import mat73
+import pywt
 import pandas as pd
 import numpy as np
 from scipy.stats import skew, kurtosis
+from scipy.signal import stft
+
 
 
 def feature_extraction(file_path, condition_label):
