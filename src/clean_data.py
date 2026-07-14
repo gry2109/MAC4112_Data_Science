@@ -8,7 +8,7 @@ def clean_data_only(df):
      imputing missing values with the mean of each column, and saves the cleaned data 
      to a new CSV file.
      """
-     print("Starting data cleaning process...")
+    
      # 1 load data for the cleaning process. This comes from the features definition executed in main.py
      
      # sepreate nuerical data from column headings as this will crash the imputer 
