@@ -13,6 +13,33 @@ def main():
     Main function to orchestrate the feature extraction process.
     improve description of what this does. 
     """
+    ### Command Line Interface (CLI) for user input ###
+    print("\n===== CNC Diagnostic Pipline Options=====")
+    print("\nThis diagnostic tool performs feature extraction, cleaning, standardisation and a PCA analysis on the inputted datasets.")
+    
+    DATA_DIRECTORY = 'data/'
+    if not os.path.exists(DATA_DIRECTORY):
+        print("Data directory '{DATA_DIRECTORY}' does not exist. Please ensure the data files are in the correct location.")
+        return
+    available_DS = [f for f in os.listdir(DATA_DIRECTORY) if f.endswith('.mat')]
+    if not available_DS:
+        print(f"Error: No '.mat' files found within the '{DATA_DIRECTORY}' folder.")
+        return
+    print("\n========== AVAILABLE DATASETS ==========")
+    for index, filename in enumerate(available_DS, 1):
+        print(f"[{index}] {filename}")
+    print("==========================================")
+
+    selected_DS = [] 
+
+    print("\nPlease input the datasets you wish to run")
+
+   
+   
+   
+   
+   
+   
     ### Feature extraction process ###
     print("Starting feature extraction process...")
     # 1. Process the files to conduct the aalysis on
@@ -62,7 +89,7 @@ def main():
 
 
 
-##### Tomorrow, add the standardised and PCA function calls here to complete the set
+
 ##### May need to review what features I am extracting from the dataset from within the features function
 ##### Different signals need to be extracted, do same feautre extraction as the paper -- DO AT THE END BECAUSE ITS SLOW TO RUN.
 
