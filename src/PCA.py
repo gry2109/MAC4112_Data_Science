@@ -49,7 +49,7 @@ def plot_pca(df_pca, variance_ratio):
 
     # colour code the plot
     conditions = df_pca['Target_Condition'].unique()
-    palette = sns.color_palette("hsv", len(conditions)) 
+    palette = sns.color_palette("Set1", len(conditions)) 
 
     for cond, colour in zip(conditions, palette):
         subset = df_pca[df_pca['Target_Condition'] == cond]
