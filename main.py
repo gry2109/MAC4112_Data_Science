@@ -10,14 +10,13 @@ from src.remove_outliers import remove_outliers
 from src.classifier import train_diagnostic_classifier
 
 
-
 def main(selected_DS):
     """
     Main function to orchestrate the feature extraction process.
     improve description of what this does. 
     """
-
     DATA_DIRECTORY = 'data/'
+    
     ### Feature extraction process ###
     
     # 1. Process the files to conduct the aalysis on
@@ -64,32 +63,11 @@ def main(selected_DS):
     feature_cols_no_outliers = [col for col in df_no_outliers.columns if col not in ['Run_Number', 'Target_Condition']]
     df_pca, variance_ratio = perform_pca(df_no_outliers, feature_cols_no_outliers, n_components=3)
     df_pca.to_csv('results/master_pca_features.csv', index=False)
-    
     plot_pca(df_pca, variance_ratio)
 
-
-
+    ### ML section ###
     print("\nInitiating Machine Learning Diagnostics...")
     train_diagnostic_classifier('results/master_pca_features.csv')
-
-
-
-
-
-
-
-
-
-
-
-##### May need to review what features I am extracting from the dataset from within the features function
-##### Different signals need to be extracted, do same feautre extraction as the paper -- DO AT THE END BECAUSE ITS SLOW TO RUN.
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -105,5 +83,3 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     main(args.datasets)
-
-
