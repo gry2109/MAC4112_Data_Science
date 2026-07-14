@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import argparse
 from src.features import feature_extraction
 from src.clean_data import clean_data_only
 from src.Standardise import feature_scaling
@@ -10,56 +11,13 @@ from src.classifier import train_diagnostic_classifier
 
 
 
-def main():
+def main(selected_DS):
     """
     Main function to orchestrate the feature extraction process.
     improve description of what this does. 
     """
-    ### Command Line Interface (CLI) for user input ###
-    print("\n===== CNC Diagnostic Pipline Options=====")
-    print("\nThis diagnostic tool performs feature extraction, cleaning, standardisation and a PCA analysis on the inputted datasets.")
-    
+
     DATA_DIRECTORY = 'data/'
-    if not os.path.exists(DATA_DIRECTORY):
-        print(f"Data directory '{DATA_DIRECTORY}' does not exist. Please ensure the data files are in the correct location.")
-        return
-    available_DS = [f for f in os.listdir(DATA_DIRECTORY) if f.endswith('.mat')]
-    if not available_DS:
-        print(f"Error: No '.mat' files found within the '{DATA_DIRECTORY}' folder.")
-        return
-    print("\n========== AVAILABLE DATASETS ==========")
-    for index, filename in enumerate(available_DS, 1):
-        print(f"[{index}] {filename}")
-    print("==========================================")
-
-    selected_DS = [] 
-
-    print("\nPlease input the datasets you wish to run.")
-    print("Select either the dataset name or number from the list above one at a time. Press enter when done. Leave blank and press enter when all datasets added.")
-    while True:
-        user_input = input("\nEnter filename/number and press enter to finish.  ")
-        # make sure user entered appropriate number of datasets 
-        if user_input == "":
-            if len(selected_DS) <2:
-                print("\nYOu must select more thna one dataset for comparison")
-                continue
-            break
-         # check user inputed dataset mathcin list 
-        if user_input.isdigit() and 1 <= int(user_input) <= len(available_DS):
-            filename = available_DS[int(user_input)-1]
-        else:
-            filename = user_input if user_input.endswith('.mat') else f"{user_input}"
-        # Verfiy name is in file
-        full_file_path = os.path.join(DATA_DIRECTORY, filename)
-        if os.path.exists(full_file_path):
-            if filename not in selected_DS:
-                selected_DS.append(filename)
-                print(f"Added: {filename}")
-            else:
-                print("File already added to the list.")
-        else:
-            print(f"Error: '{filename}' not found in '{DATA_DIRECTORY}/'. Please check spelling.")
-
     ### Feature extraction process ###
     
     # 1. Process the files to conduct the aalysis on
@@ -135,4 +93,17 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="CNC Machine Diagnostic and Fault Classification Pipeline"
+    )
+
+    parser.add_argument(
+        "--datasets",
+        nargs="+",
+        required=True,
+        help="One or more .mat datasets to analyse (e.g., data/Segmented_Linear_Baseline.mat data/Segmented_Machining_baseline.mat. To run the files, type e.g.: python main.py --datasets Segmented_Linear_Baseline.mat Segmented_Machining_Baseline.mat"
+    )
+    args = parser.parse_args()
+    main(args.datasets)
+
+
