@@ -10,7 +10,7 @@ Need to add instructions on how to use the software, what needs downloading to u
 
 
 
-pip install pandas numpy mat73 scikit-learn seaborn
+pip install pandas numpy mat73 scikit-learn seaborn ensemble PyWavelets
 Need to create a data and results fodler seperately 
 
 
