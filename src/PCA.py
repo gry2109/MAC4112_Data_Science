@@ -53,7 +53,7 @@ def plot_pca(df_pca, variance_ratio):
 
     for cond, colour in zip(conditions, palette):
         subset = df_pca[df_pca['Target_Condition'] == cond]
-        ax.scatter(subset['PC1'], subset['PC2'], label=cond, alpha=0.7, color=colour)
+        ax.scatter(subset['PC1'], subset['PC2'], subset['PC3'], label=cond, alpha=0.7, color=colour)
 
     # labels on the axis
     ax.set_xlabel(f'PC1 ({variance_ratio[0]*100:.1f}% variance)')
