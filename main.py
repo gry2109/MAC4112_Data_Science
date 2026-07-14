@@ -2,6 +2,9 @@ import os
 import pandas as pd
 from src.features import feature_extraction
 from src.clean_data import clean_data_only
+from src.Standardise import feature_scaling
+from src.PCA import perform_pca
+from src.PCA import plot_pca
 
 
 
@@ -34,10 +37,34 @@ def main():
     df_cleaned.to_csv('results/master_features_cleaned.csv', index=False)
     print(f"Data cleaning complete! Cleaned dataset saved to 'results/master_features_cleaned.csv'")
 
+    ### Standardise ###
+    print("Starting feature standardisation process...")
+    feature_cols_cleaned = [col for col in df_cleaned.columns if col not in ['Run_Number', 'Target_Condition']]
+    df_standardised = feature_scaling(df_cleaned, feature_cols_cleaned)
+    df_standardised.to_csv('results/master_features_standardised.csv', index=False)
+
+    ### PCA ###
+    print("Starting PCA process...")
+    feature_cols_standardised = [col for col in df_standardised.columns if col not in ['Run_Number', 'Target_Condition']]
+    df_pca, variance_ratio = perform_pca(df_standardised, feature_cols_standardised, n_components=3)
+    df_pca.to_csv('results/master_pca_features.csv', index=False)
+    
+    plot_pca(df_pca, variance_ratio)
+
+
+
+
+
+
+
+
+
+
+
 
 ##### Tomorrow, add the standardised and PCA function calls here to complete the set
 ##### May need to review what features I am extracting from the dataset from within the features function
-
+##### Different signals need to be extracted, do same feautre extraction as the paper -- DO AT THE END BECAUSE ITS SLOW TO RUN.
 
 
 
