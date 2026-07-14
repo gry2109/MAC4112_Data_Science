@@ -20,6 +20,9 @@ def feature_extraction(file_path, condition_label):
 
     # Define list of sensors we want to extract features from
     sensor_list = {'PlateHFAccZ': ['PlateHFAccZ'],
+                    'PlateLFAccX': ['PlateLFAccX'],
+                    'PlateLFAccY': ['PlateLFAccY'],
+                    'PlateLFAccZ': ['PlateLFAccZ'],
                     'SpindleAccX': ['SpindleAccX', 'SpindleX'],
                     'SpindleAccY': ['SpindleAccY', 'SpindleY'],
                     'SpindleAccZ': ['SpindleAccZ', 'SpindleZ'],
