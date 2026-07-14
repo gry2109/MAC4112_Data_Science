@@ -13,7 +13,7 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     """
     """
     df = pd.read_csv(csv_path)
-    feature_cols = [col for col in df.columns if col.startswith('PC)')]
+    feature_cols = [col for col in df.columns if col.startswith('PC')]
     x = df[feature_cols]
     y = df['Target_Condition']
 
@@ -34,7 +34,7 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
 
     unique_classes = sorted(y.unique())
     cm = confusion_matrix(y_test, y_pred, labels=unique_classes)
-    
+    plt.close('all')
     plt.figure(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
                 xticklabels=unique_classes,
