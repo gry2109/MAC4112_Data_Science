@@ -33,7 +33,7 @@ def main():
     selected_DS = [] 
 
     print("\nPlease input the datasets you wish to run.")
-    print("Select either the dataset name or number from the list above. Press enter when done.")
+    print("Select either the dataset name or number from the list above one at a time. Press enter when done. Leave blank and press enter when all datasets added.")
     while True:
         user_input = input("\nEnter filename/number and press enter to finish.  ")
         # make sure user entered appropriate number of datasets 
