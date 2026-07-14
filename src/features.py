@@ -117,6 +117,56 @@ def feature_extraction(file_path, condition_label):
                 run_features[f'{standard_name}_ImpulseFactor'] = np.nan
                 run_features[f'{standard_name}_MarginFactor'] = np.nan
                 run_features[f'{standard_name}_Energy'] = np.nan
+                try:
+                        # Compute Short-Time Fourier Transform (STFT)
+                        frequencies, times, Zxx = stft(sensor_data, fs=10000, nperseg=256)
+                        magnitudes = np.abs(Zxx)  # Magnitude spectrum over time
+                        
+                        # Calculate Kurtosis of the magnitudes across the time axis (axis 1)
+                        freq_kurtosis = kurtosis(magnitudes, axis=1, bias=False)
+                        freq_kurtosis = np.nan_to_num(freq_kurtosis)  # Clean any dead/flat frequency bands
+                        
+                        run_features[f'{standard_name}_SK_Mean'] = np.mean(freq_kurtosis)
+                        run_features[f'{standard_name}_SK_Max'] = np.max(freq_kurtosis)
+                        run_features[f'{standard_name}_SK_Std'] = np.std(freq_kurtosis)
+                except Exception:
+                        run_features[f'{standard_name}_SK_Mean'] = 0.0
+                        run_features[f'{standard_name}_SK_Max'] = 0.0
+                        run_features[f'{standard_name}_SK_Std'] = 0.0
+                    
+                    # D. TIME-FREQUENCY: CONTINUOUS WAVELET TRANSFORM ENERGY BANDS 
+                try:
+                        scales = np.arange(1, 33)  # 32 scales
+                        coefficients, frequencies = pywt.cwt(sensor_data, scales, 'morl')
+                        cwt_energy = np.abs(coefficients)
+                        
+                        # Split the 32 scale coefficients into 4 equal bands (8 scales each)
+                        bands = np.array_split(cwt_energy, 4, axis=0)
+                        
+                        run_features[f'{standard_name}_CWT_Band1'] = np.mean(bands[0])
+                        run_features[f'{standard_name}_CWT_Band2'] = np.mean(bands[1])
+                        run_features[f'{standard_name}_CWT_Band3'] = np.mean(bands[2])
+                        run_features[f'{standard_name}_CWT_Band4'] = np.mean(bands[3])
+                except Exception:
+                        run_features[f'{standard_name}_CWT_Band1'] = 0.0
+                        run_features[f'{standard_name}_CWT_Band2'] = 0.0
+                        run_features[f'{standard_name}_CWT_Band3'] = 0.0
+                        run_features[f'{standard_name}_CWT_Band4'] = 0.0
+                    
+                else:
+                    # Sensor exists, but run is empty -> Fill all 17 features with NaN
+                    for suffix in ['Mean', 'RMS', 'Max_Peak', 'Skewness', 'Kurtosis', 
+                                   'CrestFactor', 'ShapeFactor', 'ImpulseFactor', 'MarginFactor', 'Energy',
+                                   'SK_Mean', 'SK_Max', 'SK_Std', 
+                                   'CWT_Band1', 'CWT_Band2', 'CWT_Band3', 'CWT_Band4']:
+                        run_features[f'{standard_name}_{suffix}'] = np.nan
+        else:
+                # Sensor is completely missing from this mat file -> Fill all 17 features with NaN
+            for suffix in ['Mean', 'RMS', 'Max_Peak', 'Skewness', 'Kurtosis', 
+                               'CrestFactor', 'ShapeFactor', 'ImpulseFactor', 'MarginFactor', 'Energy',
+                               'SK_Mean', 'SK_Max', 'SK_Std', 
+                               'CWT_Band1', 'CWT_Band2', 'CWT_Band3', 'CWT_Band4']:
+                    run_features[f'{standard_name}_{suffix}'] = np.nan
         extracted_features.append(run_features)
         
     return pd.DataFrame(extracted_features)
