@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import argparse
+import glob
 from src.features import feature_extraction
 from src.features import get_feature_cols
 from src.clean_data import clean_data_only
@@ -130,4 +131,51 @@ if __name__ == "__main__":
         help="One or more .mat datasets to analyse (e.g., data/Segmented_Linear_Baseline.mat data/Segmented_Machining_baseline.mat. To run the files, type e.g.: python main.py --datasets Segmented_Linear_Baseline.mat Segmented_Machining_Baseline.mat"
     )
     args = parser.parse_args()
-    main(args.datasets)
+    
+
+    # Validation logic
+    DATA_DIRECTORY = 'data/'
+    resolved_files = []
+    # Directory check
+    if not os.path.exists(DATA_DIRECTORY):
+        parser.error(f"Error: The database folder '{DATA_DIRECTORY}' does not exist")
+    available_files = [f for f in os.listdir(DATA_DIRECTORY) if f.endswith('.mat')]
+
+    try:
+        for item in args.datasets:
+            item_lower = item.lower()
+
+            if item_lower == 'all':
+                print(f"Adding all (len{available_files} .mat files...)")
+                resolved_files.extend(available_files)
+                continue
+            if not item_lower.endswith('.mat'):
+                keyword_matches = [f for f in available_files if item_lower in f.lower()]
+                if keyword_matches:
+                    print(f"Keyword '{item}' matched: {keyword_matches}")
+                    resolved_files.extend(keyword_matches)
+                    continue
+                else:
+                    raise ValueError(f"Keyword '{item}' did not match any files in '{DATA_DIRECTORY}'.")
+            filename = os.path.basename(item)
+            full_path = os.path.join(DATA_DIRECTORY, filename)
+            
+            if not os.path.exists(full_path):
+                raise ValueError(f"File '{filename}' not found in database folder '{DATA_DIRECTORY}'.")
+            
+            resolved_files.append(filename)
+            
+        # Deduplicate the resolved files list
+        final_unique_files = list(set(resolved_files))
+        if len(final_unique_files) < 2:
+             raise ValueError(
+                 f"The pipeline resolved to only {len(final_unique_files)} dataset(s): {final_unique_files}.\n"
+                 f"You must select at least 2 datasets for comparison."
+             )
+        
+        # Pass the verified list of files directly to main()
+        main(final_unique_files)
+        
+    except ValueError as err:
+        # Exit cleanly and print the error message via argparse's standard error formatter
+        parser.error(f"\nError: {str(err)}")
