@@ -104,7 +104,7 @@ def main():
     ### PCA ###
     print("Starting PCA process...")
     feature_cols_no_outliers = [col for col in df_no_outliers.columns if col not in ['Run_Number', 'Target_Condition']]
-    df_pca, variance_ratio = perform_pca(df_standardised, feature_cols_no_outliers, n_components=3)
+    df_pca, variance_ratio = perform_pca(df_no_outliers, feature_cols_no_outliers, n_components=3)
     df_pca.to_csv('results/master_pca_features.csv', index=False)
     
     plot_pca(df_pca, variance_ratio)
