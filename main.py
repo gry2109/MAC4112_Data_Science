@@ -20,7 +20,7 @@ def main(selected_DS):
     ### Feature extraction process ###
     
     # 1. Process the files to conduct the aalysis on
-    print("Starting feature extraction process...")
+    print("\nStarting feature extraction process...")
     DS_dict = {}
     for filename in selected_DS:
         full_file_path = os.path.join(DATA_DIRECTORY, filename)
@@ -40,26 +40,26 @@ def main(selected_DS):
     print(f"Total rows: {len(master_dataset)} | Total columns: {len(master_dataset.columns)}")
 
     ### Cleaning process ###
-    print("Starting data cleaning process...")
+    print("\nStarting data cleaning process...")
     # 1. Call function and pass the master dataset to it, then output to a CSV file 
     df_cleaned = clean_data_only(master_dataset)
     df_cleaned.to_csv('results/master_features_cleaned.csv', index=False)
     print(f"Data cleaning complete! Cleaned dataset saved to 'results/master_features_cleaned.csv'")
 
     ### Standardise ###
-    print("Starting feature standardisation process...")
+    print("\nStarting feature standardisation process...")
     feature_cols_cleaned = [col for col in df_cleaned.columns if col not in ['Run_Number', 'Target_Condition']]
     df_standardised = feature_scaling(df_cleaned, feature_cols_cleaned)
     df_standardised.to_csv('results/master_features_standardised.csv', index=False)
 
     ### Filter anomalous runs ###
-    print("Starting outlier removal...")
+    print("\nStarting outlier removal...")
     feature_cols_standardised = [col for col in df_standardised.columns if col not in ['Run_Number', 'Target_Condition']]
     df_no_outliers = remove_outliers(df_standardised, feature_cols_standardised)
     df_no_outliers.to_csv('results/master_features_no_outliers.csv', index=False)
 
     ### PCA ###
-    print("Starting PCA process...")
+    print("\nStarting PCA process...")
     feature_cols_no_outliers = [col for col in df_no_outliers.columns if col not in ['Run_Number', 'Target_Condition']]
     df_pca, variance_ratio = perform_pca(df_no_outliers, feature_cols_no_outliers, n_components=3)
     df_pca.to_csv('results/master_pca_features.csv', index=False)
