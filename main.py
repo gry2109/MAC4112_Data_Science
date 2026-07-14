@@ -6,6 +6,7 @@ from src.Standardise import feature_scaling
 from src.PCA import perform_pca
 from src.PCA import plot_pca
 from src.remove_outliers import remove_outliers
+from src.classifier import train_diagnostic_classifier
 
 
 
@@ -109,6 +110,9 @@ def main():
     plot_pca(df_pca, variance_ratio)
 
 
+
+    print("\nInitiating Machine Learning Diagnostics...")
+    train_diagnostic_classifier('results/master_pca_features.csv')
 
 
 
