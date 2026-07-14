@@ -64,6 +64,7 @@ def plot_pca(df_pca, variance_ratio):
         ax.grid(True)
         ax.view_init(elev=20, azim=30)  # Adjust the viewing angle for better visualization
         fig.savefig('results/pca_scatter_plot.png', dpi=300, bbox_inches='tight')
+        plt.show()
         plt.close()
         print("PCA scatter plot saved to 'results/pca_scatter_plot.png'")
 
