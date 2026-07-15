@@ -27,7 +27,7 @@ def main(selected_DS):
     for filename in selected_DS:
         full_file_path = os.path.join(DATA_DIRECTORY, filename)
         condition_label = filename.replace('Segmented_', '').replace('_', ' ').replace('.mat', '').title()
-        print(f"Processing: {filename}, LAbelled as: '{condition_label}'")
+        print(f"Processing: {filename}, Labelled as: '{condition_label}'")
         df_feat = feature_extraction(full_file_path, condition_label)
         DS_dict[condition_label] = df_feat
     
