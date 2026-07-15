@@ -114,5 +114,7 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     print(f"Grouped performance chart saved to '{comparison_chart_path}'\n")
     # plt.show()
 
+    return results_comparison
+
 if __name__ == '__main__':
     train_diagnostic_classifier('results/master_pca_features.csv')
