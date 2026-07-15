@@ -3,12 +3,10 @@ import time
 import sys
 import pandas as pd
 import argparse
-from src.features import feature_extraction
-from src.features import get_feature_cols
+from src.features import feature_extraction, get_feature_cols
 from src.clean_data import clean_data_only
 from src.Standardise import feature_scaling
-from src.PCA import perform_pca
-from src.PCA import plot_pca
+from src.PCA import perform_pca, plot_pca
 from src.remove_outliers import remove_outliers
 from src.classifier import train_diagnostic_classifier
 
