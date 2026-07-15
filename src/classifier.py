@@ -47,11 +47,12 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         model.fit(x_train, y_train)
         y_pred = model.predict(x_test)
     
-        results_comparison[name] = {"Accuracy":accuracy_score(y_test, y_pred),
-                                    "Precision": precision_score(y_test, y_pred),
-                                    "Recall": recall_score(y_test, y_pred),
-                                    "F1": f1_score(y_test, y_pred)
-                                    }
+        results_comparison[name] = {
+            "Accuracy": accuracy_score(y_test, y_pred),
+            "Precision": precision_score(y_test, y_pred, average='macro'),
+            "Recall": recall_score(y_test, y_pred, average='macro'),
+            "F1": f1_score(y_test, y_pred, average='macro')
+            }
         print(f"\nClassification Report for {name}:")
         print(classification_report(y_test, y_pred))
         
@@ -74,12 +75,17 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         plt.close()
     
     
-    print("\n============== MODEL COMPARISON REPORT ==============")
+    print("\n================== MODEL COMPARISON REPROT ==================")
     print(f"{'Classifier Name':<30} | {'Test Accuracy':<15}")
     print("-" * 50)
-    for model_name, accuracy in results_comparison.items():
+    for model_name, metrics in results_comparison.items():
+        # Retrieve 'Accuracy' from the metrics dictionary
+        accuracy = metrics["Accuracy"] 
         print(f"{model_name:<30} | {accuracy * 100:>13.2f}%")
-    print("=======================================================")
+    print("===============================================================")
+
+
+
 
     plt.close('all')
     plt.figure(figsize=(10, 5))
