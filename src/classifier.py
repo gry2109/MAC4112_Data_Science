@@ -48,27 +48,25 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         results_comparison[name] = acc
         print(f"\nClassification Report for {name}:")
         print(classification_report(y_test, y_pred))
-    
+        
         cm = confusion_matrix(y_test, y_pred, labels=unique_classes)
         plt.close('all')
         plt.figure(figsize=(8, 6))
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
                     xticklabels=unique_classes,
                     yticklabels=unique_classes)
-        plt.title('CNC Condition Monitoring Confusion Matrix')
+        model_name = name.lower()
+        plt.title(f'{model_name} Confusion Matrix')
         plt.xlabel('Predicted Operational State')
         plt.ylabel('Actual Truth State')
         plt.tight_layout()
-    file_save_name = name.lower().replace(" ", "_")
-    matrix_path = f'results/confusion_matrix_{file_save_name}.png'
-    plt.savefig(matrix_path, dpi=300)
-    print(f"Success! Confusion matrix chart saved to '{matrix_path}'")
-    plt.show()
+        file_save_name = name.lower().replace(" ", "_")
+        matrix_path = f'results/confusion_matrix_{file_save_name}.png'
+        plt.savefig(matrix_path, dpi=300)
+        print(f"Success! Confusion matrix chart saved to '{matrix_path}'")
+        plt.show()
+        plt.close()
     
-
-    # print("\n============== MODEL PERFOMRANCE REPORT ==============")
-    # print(classification_report(y_test, y_pred))
-    # print("========================================================")
     
     print("\n============== MODEL COMPARISON REPORT ==============")
     print(f"{'Classifier Name':<30} | {'Test Accuracy':<15}")
@@ -77,12 +75,28 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         print(f"{model_name:<30} | {accuracy * 100:>13.2f}%")
     print("=======================================================")
 
-    
+    plt.close('all')
+    plt.figure(figsize=(10, 5))
+    palette = sns.color_palette("Set1", len(classifiers)) 
+    plt.bar(results_comparison.keys(), [acc * 100 for acc in results_comparison.values()], color=palette, edgecolor = 'black', width = 0.5)
+    plt.title('Perfomance Accuracy Comparison of Models')
+    plt.ylabel('Accuracy (%)')
+    plt.ylim(0, 105)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    for index, value in enumerate(results_comparison.values()):
+        plt.text(index, (value*100)+1.5, f"{value*100:.2f}%", ha='center', fontweight='bold')
+    plt.tight_layout()
+    comparison_chart_path = 'results/classifier_accuracy_comparison.png'
+    plt.savefig(comparison_chart_path, dpi=300)
+    print(f"Comparison performance chart saved to '{comparison_chart_path}'\n")
+    plt.show()
 
  
 
 
-
+if __name__ == '__main__':
+    train_diagnostic_classifier('results/master_pca_features.csv')
 
 
 
