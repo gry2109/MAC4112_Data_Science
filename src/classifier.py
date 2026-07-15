@@ -31,7 +31,7 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     # Dictionary of classifiers to train 
     classifiers = {'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42),
                    'Decision Tree': DecisionTreeClassifier(random_state=42),
-                   'Support Vector Machine': SVC(kernal='rbf', C=1.0, random_state=42),
+                   'Support Vector Machine': SVC(kernel='rbf', C=1.0, random_state=42),
                    'k-Nearest Neighbours': KNeighborsClassifier(n_neighbors=5)
                    }
     # Dictionary for final test accuracies of the models for a comparison
@@ -77,5 +77,24 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         print(f"{model_name:<30} | {accuracy * 100:>13.2f}%")
     print("=======================================================")
 
+    
 
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
