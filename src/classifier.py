@@ -21,7 +21,7 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     """
     # load data
     df = pd.read_csv(csv_path)
-    feature_cols = [col for col in df.columns if col.startswith('PC')]
+    feature_cols = [c for c in df.columns if c not in ("Run_Number", "Target_Condition")]
     x = df[feature_cols]
     y = df['Target_Condition']
 
@@ -114,25 +114,5 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     print(f"Grouped performance chart saved to '{comparison_chart_path}'\n")
     # plt.show()
 
-   
-
- 
-
-
 if __name__ == '__main__':
     train_diagnostic_classifier('results/master_pca_features.csv')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
