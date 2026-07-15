@@ -1,4 +1,5 @@
 import os
+import time
 import sys
 import pandas as pd
 import argparse
@@ -18,7 +19,7 @@ def main(selected_DS):
     improve description of what this does. 
     """
     DATA_DIRECTORY = 'data/'
-    
+    start_time = time.time()
     ### Feature extraction process ###
     
     # 1. Process the files to conduct the aalysis on
@@ -67,6 +68,18 @@ def main(selected_DS):
     ### ML section ###
     print("\nInitiating Machine Learning Diagnostics...")
     train_diagnostic_classifier('results/master_pca_features.csv')
+
+    ### Timing ###
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print("\n=================== EXECUTION METRICS ===================")
+    if elapsed_time > 60:
+        minutes = int(elapsed_time // 60)
+        seconds = elapsed_time % 60
+        print(f"Total Pipeline Runtime: {minutes}m {seconds:.2f}s")
+    else:
+        print(f"Total Pipeline Runtime: {elapsed_time:.2f} seconds")
+    print("=========================================================\n")
 
 
 if __name__ == "__main__":
