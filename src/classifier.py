@@ -10,6 +10,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
 
 
 
@@ -44,8 +47,11 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         model.fit(x_train, y_train)
         y_pred = model.predict(x_test)
     
-        acc = accuracy_score(y_test, y_pred)
-        results_comparison[name] = acc
+        results_comparison[name] = {"Accuracy":accuracy_score(y_test, y_pred),
+                                    "Precision": precision_score(y_test, y_pred),
+                                    "Recall": recall_score(y_test, y_pred),
+                                    "F1": f1_score(y_test, y_pred)
+                                    }
         print(f"\nClassification Report for {name}:")
         print(classification_report(y_test, y_pred))
         
