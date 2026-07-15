@@ -15,22 +15,22 @@ def main(selected_DS):
     """
     Executes the complete CNC/process health assessment pipeline.
 
-    This function coordinates an end-to-end workflow, beginning with feature extraction from the selected MATLAB datasets
-    and progresses throguh data cleaning, standardisation, outlier removal, Principle Component Analysis (PCA), and 
-    Machine Learning (ML) fault classification. Intermediate datasets are generated at each tage and saved as CSV files to support
-    the traceability and inspection of the previous process
+    This function coordinates an end-to-end workflow, beginning with feature extraction from the selected MATLAB 
+    datasets and progresses throguh data cleaning, standardisation, outlier removal, Principle Component Analysis 
+    (PCA), and Machine Learning (ML) fault classification. Intermediate datasets are generated at each tage and 
+    saved as CSV files to supportthe traceability and inspection of the previous process.
 
     Parameters
     ----------------
     selected_DS : lsit[str]
-        List of .mat dataset filenames selected for analysis. Each dataset is processed indiviually before being combined into a
-        master CSV file
+        List of .mat dataset filenames selected for analysis. Each dataset is processed indiviually before being 
+        combined into a master CSV file
 
     Returns
     ----------------
     None
-        This function does not return a value. Processed datasets, figures and classification results are written to the projects
-        'results/' directory, and progress information is displayed within the terminal
+        This function does not return a value. Processed datasets, figures and classification results are written to
+        the projects 'results/' directory, and progress information is displayed within the terminal
 
     Notes
     ----------------
