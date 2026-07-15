@@ -71,38 +71,50 @@ def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
         matrix_path = f'results/confusion_matrix_{file_save_name}.png'
         plt.savefig(matrix_path, dpi=300)
         print(f"Success! Confusion matrix chart saved to '{matrix_path}'")
-        plt.show()
+        # plt.show()
         plt.close()
     
     
-    print("\n================== MODEL COMPARISON REPROT ==================")
-    print(f"{'Classifier Name':<30} | {'Test Accuracy':<15}")
-    print("-" * 50)
+    print("\n======================= MODEL COMPARISON REPORT =======================")
+    print(f"{'Classifier Name':<25} | {'Accuracy':<10} | {'Precision':<10} | {'Recall':<10} | {'F1':<10}")
+    print("-" * 70)
     for model_name, metrics in results_comparison.items():
         # Retrieve 'Accuracy' from the metrics dictionary
-        accuracy = metrics["Accuracy"] 
-        print(f"{model_name:<30} | {accuracy * 100:>13.2f}%")
-    print("===============================================================")
+        acc = metrics["Accuracy"]*100 
+        pre = metrics["Precision"]*100
+        rec = metrics["Recall"]*100
+        f1 = metrics["F1"]*100
+        print(f"{model_name:<25} | {acc:>8.2f}% | {pre:>8.2f}% | {rec:>8.2f}% | {f1:>8.2f}%")
+    print("=========================================================================")
 
 
-
-
+    performance_df = pd.DataFrame(results_comparison).T * 100
+    
+   
     plt.close('all')
-    plt.figure(figsize=(10, 5))
-    palette = sns.color_palette("Set1", len(classifiers)) 
-    plt.bar(results_comparison.keys(), [acc * 100 for acc in results_comparison.values()], color=palette, edgecolor = 'black', width = 0.5)
-    plt.title('Perfomance Accuracy Comparison of Models')
-    plt.ylabel('Accuracy (%)')
-    plt.ylim(0, 105)
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-
-    for index, value in enumerate(results_comparison.values()):
-        plt.text(index, (value*100)+1.5, f"{value*100:.2f}%", ha='center', fontweight='bold')
+    ax = performance_df.plot(kind='bar', figsize=(12, 6), edgecolor='black', width=0.8)
+    
+    plt.title('Multi-Metric Performance Comparison of Diagnostic Classifiers', fontsize=14, fontweight='bold')
+    plt.ylabel('Score (%)', fontsize=12)
+    plt.xlabel('Classifier Model', fontsize=12)
+    plt.xticks(rotation=0) # Keep model names horizontal so they are readable
+    plt.ylim(0, 140)      # Give room for the legend and labels
+    plt.grid(axis='y', linestyle='--', alpha=0.5)
+    
+    # Place the legend in a clean spot
+    plt.legend(loc='upper right', framealpha=0.9)
+    
+    # Add value labels on top of the bars
+    for container in ax.containers:
+        ax.bar_label(container, fmt='%.1f%%', padding=3, fontsize=8)
+        
     plt.tight_layout()
-    comparison_chart_path = 'results/classifier_accuracy_comparison.png'
+    comparison_chart_path = 'results/classifier_multi_metric_comparison.png'
     plt.savefig(comparison_chart_path, dpi=300)
-    print(f"Comparison performance chart saved to '{comparison_chart_path}'\n")
-    plt.show()
+    print(f"Grouped performance chart saved to '{comparison_chart_path}'\n")
+    # plt.show()
+
+   
 
  
 
