@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def perform_pca(df, feature_cols, n_components=3):
+def perform_pca(df, feature_cols, n_components=15):
     """
     Performs PCA on the specified feature columns of the DataFrame.
     
