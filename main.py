@@ -13,14 +13,42 @@ from src.classifier import train_diagnostic_classifier
 
 def main(selected_DS):
     """
-    Main function to orchestrate the feature extraction process.
-    improve description of what this does. 
+    Executes the complete CNC/process health assessment pipeline.
+
+    This function coordinates an end-to-end workflow, beginning with feature extraction from the selected MATLAB datasets
+    and progresses throguh data cleaning, standardisation, outlier removal, Principle Component Analysis (PCA), and 
+    Machine Learning (ML) fault classification. Intermediate datasets are generated at each tage and saved as CSV files to support
+    the traceability and inspection of the previous process
+
+    Parameters
+    ----------------
+    selected_DS : lsit[str]
+        List of .mat dataset filenames selected for analysis. Each dataset is processed indiviually before being combined into a
+        master CSV file
+
+    Returns
+    ----------------
+    None
+        This function does not return a value. Processed datasets, figures and classification results are written to the projects
+        'results/' directory, and progress information is displayed within the terminal
+
+    Notes
+    ----------------
+    The processing timeline follows these steps:
+        1. Feature extraction
+        2. Date cleaning
+        3. Feature standardisation
+        4. Outlier removal
+        5. PCA
+        6. ML model training and evaluation
+    Runtime statistics are reported on completion providing feedback on pipeline performance.
     """
     DATA_DIRECTORY = 'data/'
     start_time = time.time()
+
     ### Feature extraction process ###
     
-    # 1. Process the files to conduct the aalysis on
+    # 1. Process the files to conduct the analysis on
     print("\nStarting feature extraction process...")
     DS_dict = {}
     for filename in selected_DS:
@@ -34,7 +62,7 @@ def main(selected_DS):
     print("\nCombining selected datasets...")
     master_dataset = pd.concat(DS_dict.values(), ignore_index=True)
 
-    # 3. Save the final table as a CSV so we can easily look at it
+    # 3. Save the final table as a CSV 
     output_path = 'results/master_features.csv'
     master_dataset.to_csv(output_path, index=False)
     print(f"Success! Master dataset saved to {output_path}")
@@ -47,23 +75,23 @@ def main(selected_DS):
     df_cleaned.to_csv('results/master_features_cleaned.csv', index=False)
     print(f"Data cleaning complete! Cleaned dataset saved to 'results/master_features_cleaned.csv'")
 
-    ### Standardise ###
+    ### Feature Standardisation ###
     print("\nStarting feature standardisation process...")
     df_standardised = feature_scaling(df_cleaned, get_feature_cols(df_cleaned))
     df_standardised.to_csv('results/master_features_standardised.csv', index=False)
 
-    ### Filter anomalous runs ###
+    ### Filter anomalous results ###
     print("\nStarting outlier removal...")
     df_no_outliers = remove_outliers(df_standardised, get_feature_cols(df_standardised))
     df_no_outliers.to_csv('results/master_features_no_outliers.csv', index=False)
 
-    ### PCA ###
+    ### Principle Component Analysis ###
     print("\nStarting PCA process...")
     df_pca, variance_ratio = perform_pca(df_no_outliers, get_feature_cols(df_no_outliers), n_components=3)
     df_pca.to_csv('results/master_pca_features.csv', index=False)
     plot_pca(df_pca, variance_ratio)
 
-    ### ML section ###
+    ### ML classification ###
     print("\nInitiating Machine Learning Diagnostics...")
     train_diagnostic_classifier('results/master_pca_features.csv')
 
@@ -81,9 +109,7 @@ def main(selected_DS):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="CNC Machine Diagnostic and Fault Classification Pipeline"
-    )
+    parser = argparse.ArgumentParser(description="CNC Machine Diagnostic and Fault Classification Pipeline")
 
     parser.add_argument(
         "--datasets",
