@@ -8,10 +8,27 @@ from scipy.signal import stft
 
 
 def get_feature_cols(df, exclude=['Run_Number', 'Target_Condition']):
-     """
-     Return a list of all column names in the data frame, excluding metadata.
-     """
-     return [col for col in df.columns if col not in exclude]
+    """
+    Identifies the feature columns availible for analysis.
+
+    This helper function returns the names f all feature columns in a dataframe while excluding metadata and target 
+    label columns that should not be included in preprocessing or machine learning tasks.
+
+    Parameters
+    ----------------
+    df : pandas.DataFrame
+        Input dataset containing both feature variables and metadata.
+    
+    exclude: lsit[str], optional
+        List of column names to exclude from the returned feature lsit. By default the run identifier and target 
+        conditions are excluded.
+
+    Returns
+    ----------------
+    list[str]
+        A lsit containing the names of the feature columns available for statistical analysis and ML
+    """
+    return [col for col in df.columns if col not in exclude]
 
 
 
