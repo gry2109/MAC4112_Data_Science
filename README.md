@@ -15,7 +15,7 @@ The objectives of this software are to:
 - Extract meaningful features from multiple sensors.
 - Clean and preprocess these extracted features.
 - Detect and remove anomalous runs.
-- Reduce feature dimensionality using Principle Componenet Analysis (PCA).
+- Reduce feature dimensionality using Principle Component Analysis (PCA).
 - Train and compare multiple machine learning (ML) classifiers.
 
 ---
@@ -77,7 +77,7 @@ Performance Evaluation & Visualisation
 ---
 
 ## Extracted Features
-Statistical Features: Mean, Root Mean Square (RMS), MAximum Peak, Skewness, Kurtosis.  
+Statistical Features: Mean, Root Mean Square (RMS), Maximum Peak, Skewness, Kurtosis.  
 
 Dimensionless Features: Crest Factor, Shape Factor, Impulse Factor, Margin Factor.  
 
@@ -88,13 +88,13 @@ Time-Frequency Features: Spectral Kurtosis, Continuous Wavelet Transform Energy 
 ---
 
 ## Machine Learning Models
-The followign algorithms are evaluated:
+The following algorithms are evaluated:
 - Random Forest
 - Decision Tree
-- Support Vector Machining
+- Support Vector Machine
 - k-Nearest Neighbours
 
-Eaach is evaluated using:
+Each is evaluated using:
 - Accuracy
 - Precision
 - Recall
@@ -108,7 +108,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/gry2109/MAC4112_Data_Science.git
 ```
-Move into the project folder :
+Move into the project folder:
 ```bash
 cd MAC4112_DATA_SCIENCE
 ```
@@ -224,7 +224,7 @@ Key Python packages included in the requirments file:
 - scikit-learn
 - matplotlib
 - seaborn
-- pywavelets
+- PyWavelets
 - mat73
 - pytest
 
