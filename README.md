@@ -1,5 +1,5 @@
 # MAC4112 Data Science and Software Engineering in Manufacturing 
-![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Python](https://img.shields.io/badge/Python-3.13.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Complete-success)
 ## Overview
@@ -77,11 +77,11 @@ Performance Evaluation & Visualisation
 ---
 
 ## Extracted Features
-Statistical Features: Mean, Root Mean Square (RMS), MAximum Peak, Skewness, Kurtosis.
+Statistical Features: Mean, Root Mean Square (RMS), MAximum Peak, Skewness, Kurtosis.  
 
-Dimensionless Features: Crest Factor, Shape Factor, Impulse Factor, Margin Factor.
+Dimensionless Features: Crest Factor, Shape Factor, Impulse Factor, Margin Factor.  
 
-Energy Feature: Signal Energy.
+Energy Feature: Signal Energy.  
 
 Time-Frequency Features: Spectral Kurtosis, Continuous Wavelet Transform Energy Bands.
 
