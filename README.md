@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Complete-success)
 ## Overview
-This project was developed as part of the **MAC4112 Data Science and Research Software** module at the University of Sheffield.
+This project was developed as part of the **MAC4112 Data Science and Research Software** module at the University of Sheffield.  
 
 The software provides a complete data analysis pipeline for the diagnosis of machine tool and machine process health using multi-sensor data collected from CNC milling experiments. Raw MATLAB (.mat) files are processed through a reproducible workflow consisting of feature extraction, data cleaning, feature standardisation, anomaly detection, PCA, and machine learning classification.
 
@@ -231,22 +231,27 @@ Key Python packages included in the requirments file:
 ---
 
 ## License
-This project is released under the MIT License.
+This project is released under the MIT License.  
+
 See the LICENSE file for further details.
 
 ---
 
 ## Author
-George Riley
-PhD student
+George Riley  
+
+PhD student  
+
 The University of Sheffield
 
 ---
 
-##Acknowledgements
-This work was completed as part of the **MAC4112 Data Science and Research Software** module.
-Dataset provided by: Dominguez Caballero, J. A., Moore, J., & Stammers, J.
-Teaching provided by Lindsay Lee and the RSE team: https://rse.shef.ac.uk/
+## Acknowledgements
+This work was completed as part of the **MAC4112 Data Science and Research Software** module.  
+
+Dataset provided by: Dominguez Caballero, J. A., Moore, J., & Stammers, J.  
+
+Teaching provided by Lindsay Lee and the RSE team: https://rse.shef.ac.uk/  
 
 The University of Sheffield.
 
