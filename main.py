@@ -65,7 +65,7 @@ def main(selected_DS):
     # 3. Save the final table as a CSV 
     output_path = 'results/master_features.csv'
     master_dataset.to_csv(output_path, index=False)
-    print(f"Success! Master dataset saved to {output_path}")
+    print(f"Success. Master dataset saved to {output_path}")
     print(f"Total rows: {len(master_dataset)} | Total columns: {len(master_dataset.columns)}")
 
     ### Cleaning process ###
@@ -73,7 +73,7 @@ def main(selected_DS):
     # 1. Call function and pass the master dataset to it, then output to a CSV file 
     df_cleaned = clean_data_only(master_dataset)
     df_cleaned.to_csv('results/master_features_cleaned.csv', index=False)
-    print(f"Data cleaning complete! Cleaned dataset saved to 'results/master_features_cleaned.csv'")
+    print(f"Data cleaning complete. Cleaned dataset saved to 'results/master_features_cleaned.csv'")
 
     ### Feature Standardisation ###
     print("\nStarting feature standardisation process...")

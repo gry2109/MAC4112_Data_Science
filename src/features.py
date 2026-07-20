@@ -37,9 +37,35 @@ def get_feature_cols(df, exclude=['Run_Number', 'Target_Condition']):
 
 def feature_extraction(file_path, condition_label):
     """
-    Reads a .mat file, extracts 5 statistical features for key sensors, 
-    and returns a Pandas DataFrame. These are the mean, square root, 
-    standard deviation, skew and kurtosis.
+    Extract statistical and time-frequency features from the dataset.
+
+    This function loads a .mat dataset containing sensor signals collected from machining experiemnts and generates 
+    a set of engineered features for each machining run. The extracted features include the mean, root mean square,
+    maximum peak, skewness, kurtosis, crest factor, shape factor, impulse factor, margin factor, energy, signal 
+    kurtosis and continuois wave transform (CWT).
+
+    The resulting feature set is labelled with the corresponding machining condition and returned as a structured
+    pandas dataframe for preprocessing.
+    
+    Paramaters
+    ----------------
+    file_path : str
+        Path to the .mat dataset containing the sensor signals.
+
+    condition_label : str
+        Label describing the operating condition represented by the dataset. This label is assigned to every 
+        extracted run.
+
+    Returns
+    ----------------
+    pandas.DataFrame
+        A dataframe where each row represents an individual run and each column contaisn the extracted feature or
+        associated metadata.
+
+    Notes
+    ----------------
+    Missing or unavailable sensor data are handled by assigning NaN values to the corresponding feature set, ensuring
+    a consistent feature structure across all datasets.
     """
     print(f"Extracting features from {file_path} for condition: {condition_label}")
 
@@ -71,7 +97,7 @@ def feature_extraction(file_path, condition_label):
             'Run_Number': i + 1,
             'Target_Condition': condition_label
         }
-       # 1. Unpack BOTH the standard name and the list of aliases
+       # 1. Unpack the standard name and the list of aliases
         for standard_name, aliases in sensor_list.items():
             resolved_key = None # This will hold the actual name we find in the file
             
@@ -83,7 +109,7 @@ def feature_extraction(file_path, condition_label):
 
             # 3. If found match, extract features
             if resolved_key is not None:
-                # This must be INDENTED under the if statement
+                # This must be indented under the if statement
                 sensor_data = dataset[resolved_key][i]
                 
                 if sensor_data is not None and np.size(sensor_data) > 1:
@@ -200,7 +226,3 @@ def feature_extraction(file_path, condition_label):
         extracted_features.append(run_features)
         
     return pd.DataFrame(extracted_features)
-
-
-
-

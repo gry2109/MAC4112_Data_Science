@@ -3,14 +3,28 @@ import pandas as pd
 
 def feature_scaling(df, feature_cols):
     """
-    Scales the features in the DataFrame using StandardScaler.
-    
-    Parameters:
-    df (pd.DataFrame): The input DataFrame containing features to be scaled.
-    feature_cols (list): List of column names to be scaled.
-    
-    Returns:
-    pd.DataFrame: A new DataFrame with scaled features.
+    SStandardise numerical feature variables for statistical analysis.
+
+    This function applies z-score standardisation to the selected feature columns using scikit-
+    learn's StandardScaler. Each feature is transformed to have a mean of zero and a standard deviation
+    of one, ensuring all variables contribute equally to subsequent analyses such as PCA and ML 
+    classification.
+
+    Metadata columns are preserved and not included in the scaling.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input DataFrame containing the extracted feature dataset.
+
+    feature_cols : list[str]
+        List of numerical feature columns to be standardised.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A copy of the input DataFrame with the specified feature columns
+        standardised while preserving all metadata columns.
     """
     scaler = StandardScaler()
     df_scaled = df.copy()

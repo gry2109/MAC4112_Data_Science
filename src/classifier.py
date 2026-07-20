@@ -18,6 +18,44 @@ from sklearn.metrics import f1_score
 
 def train_diagnostic_classifier(csv_path='results/master_pca_features.csv'):
     """
+    Train and evaluate multiple machine learning classifiers for machining
+    condition diagnosis.
+
+    This function loads a preprocessed feature dataset, separates the
+    feature variables from the target labels, and performs a train-test split 
+    to preserve the class distribution. Four supervised
+    classification algorithms are trained and evaluated using the same
+    training and evaluation datasets to enable a fair comparison of their
+    performance.
+
+    For each classifier, the function calculates common performance
+    metrics, generates a confusion matrix, and saves the resulting
+    visualisations to the project's results directory. A grouped bar chart
+    comparing the performance of all classifiers is also produced.
+
+    Parameters
+    ----------
+    csv_path : str, optional
+        Path to the CSV file containing the preprocessed feature dataset.
+        The default is 'results/master_pca_features.csv'.
+
+    Returns
+    -------
+    dict
+        A dictionary containing the performance metrics (Accuracy,
+        Precision, Recall and F1-score) for each trained classifier.
+
+    Notes
+    -----
+    The classifiers currently evaluated are:
+
+    - Random Forest
+    - Decision Tree
+    - Support Vector Machine 
+    - k-Nearest Neighbours
+
+    The train-test split uses a fixed random seed to ensure reproducible
+    experimental results.
     """
     # load data
     df = pd.read_csv(csv_path)

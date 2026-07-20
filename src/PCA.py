@@ -6,15 +6,38 @@ import seaborn as sns
 
 def perform_pca(df, feature_cols, n_components=15):
     """
-    Performs PCA on the specified feature columns of the DataFrame.
-    
-    Parameters:
-    df (pd.DataFrame): The input DataFrame containing features to be reduced.
-    feature_cols (list): List of column names to be used for PCA.
-    n_components (int): Number of principal components to keep.
-    
-    Returns:
-    pd.DataFrame: A new DataFrame with the principal components.
+    Reduce the dimensionality of the engineered feature dataset using
+    Principal Component Analysis (PCA).
+
+    This function applies PCA to the selected numerical feature columns,
+    transforming the original feature space into a smaller set of
+    principal components. The resulting components capture the
+    majority of the variation present in the original dataset while
+    reducing redundancy between correlated variables. Metadata columns are
+    preserved and reattached to the transformed dataset.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input DataFrame containing both metadata and numerical features.
+
+    feature_cols : list[str]
+        List of numerical feature columns to be included in the PCA.
+
+    n_components : int, optional
+        Number of principal components to retain.
+
+    Returns
+    -------
+    tuple
+        A tuple containing:
+
+        - pandas.DataFrame
+            DataFrame containing the retained principal components together
+            with the original metadata columns.
+
+        - numpy.ndarray
+            Explained variance ratio for each retained principal component.
     """
     # Seperate the features and the identity columns again 
 
@@ -38,11 +61,30 @@ def perform_pca(df, feature_cols, n_components=15):
 
 def plot_pca(df_pca, variance_ratio):
     """
-    Plots the PCA results in a scatter plot.
-    
-    Parameters:
-    df_pca (pd.DataFrame): The DataFrame containing principal components and identity columns.
-    variance_ratio (list): List of explained variance ratios for each principal component.
+    Generate and save a 3D visualisation of the principal
+    component analysis.
+
+    This function creates a 3D scatter plot of the first three principal
+    components, with observations coloured according to their target
+    operating condition. The percentage of variance explained by each
+    principal component is displayed on the corresponding axis to aid
+    interpretation of the dimensionality reduction.
+
+    Parameters
+    ----------
+    df_pca : pandas.DataFrame
+        DataFrame containing the principal components and associated
+        metadata, including the target condition labels.
+
+    variance_ratio : numpy.ndarray
+        Explained variance ratio for each retained principal component,
+        used to annotate the plot axes.
+
+    Returns
+    -------
+    None
+        The PCA visualisation is saved to the project's `results/`
+        directory and summary information is printed to the terminal.
     """
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
