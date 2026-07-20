@@ -56,7 +56,7 @@ Raw MATLAB files (.mat)
 Feature Extraction
             │
             ▼
-Missing Value Imputation
+Data Cleaning
             │
             ▼
 Feature Standardisation
