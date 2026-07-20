@@ -11,6 +11,8 @@ __pycache__/
 *.xlsx
 
 # Ignore Python environemnt and cache folders (just in case) 
+.pytest_cache/
+pytest_cache
 __pycache__/
 .venv/
 .env
