@@ -110,21 +110,13 @@ git clone https://github.com/gry2109/MAC4112_Data_Science.git
 ```
 Move into the project folder:
 ```bash
-cd MAC4112_DATA_SCIENCE
-```
-Create a virtual environment (recommended)
-
-Windows
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
+cd MAC4112_Data_Science
 ```
 Install dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
+Create data and reuslts files, and move the datasets into the data file.
 
 ---
 
