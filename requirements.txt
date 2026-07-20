@@ -1,0 +1,16 @@
+# Data Processing & Signal Analysis
+pandas
+numpy
+scipy
+mat73
+PyWavelets
+
+# Machine Learning & Analytics
+scikit-learn
+
+# Visualisation
+matplotlib
+seaborn
+
+# Testing
+pytest
