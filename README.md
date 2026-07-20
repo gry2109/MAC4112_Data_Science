@@ -20,7 +20,7 @@ The objectives of this software are to:
 ---
 
 ## Repository Structure
-
+```
 MAC4112_DATA_SCIENCE/
 │
 ├── data/                     # Raw MATLAB datasets (not tracked by Git)
@@ -43,6 +43,7 @@ MAC4112_DATA_SCIENCE/
 ├── .gitignore
 ├── LICENSE
 └── README.md
+```
 
 ---
 
