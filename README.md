@@ -4,6 +4,7 @@
 ![Status](https://img.shields.io/badge/Status-Complete-success)
 ## Overview
 This project was developed as part of the **MAC4112 Data Science and Research Software** module at the University of Sheffield.
+
 The software provides a complete data analysis pipeline for the diagnosis of machine tool and machine process health using multi-sensor data collected from CNC milling experiments. Raw MATLAB (.mat) files are processed through a reproducible workflow consisting of feature extraction, data cleaning, feature standardisation, anomaly detection, PCA, and machine learning classification.
 
 ---
@@ -76,9 +77,12 @@ Performance Evaluation & Visualisation
 ---
 
 ## Extracted Features
-Statistical Features: Mean, Root Mean Square (RMS), MAximum Peak, Skewness, Kurtosis
+Statistical Features: Mean, Root Mean Square (RMS), MAximum Peak, Skewness, Kurtosis.
+
 Dimensionless Features: Crest Factor, Shape Factor, Impulse Factor, Margin Factor.
+
 Energy Feature: Signal Energy.
+
 Time-Frequency Features: Spectral Kurtosis, Continuous Wavelet Transform Energy Bands.
 
 ---
@@ -124,10 +128,23 @@ pip install -r requirements.txt
 
 ---
 
+## Development Environment
+The software was developed and tested using:
+
+- Python 3.13.5
+- Visual Studio Code 1.28.1
+- Windows 11
+
+All required Python package versions are specified in `requirements.txt`.
+
+---
+
 ## Dataset
 The dataset is **NOT INCLUDED** within this repository due to size and licensing.
+
 Download the dataset from:
-**Sensor signals for machine tool and process health assessment** Dominguez Caballero, J. A., Moore, J., & Stammers, J. (2023)
+
+**Sensor signals for machine tool and process health assessment** Dominguez Caballero, J. A., Moore, J., & Stammers, J. (2023), 
 DOI: https://doi.org/10.15131/shef.data.24125715.v1
 
 After downloading, place all `.mat` files inside the `data/` directory
@@ -147,7 +164,7 @@ python main.py --datasets Baseline
 ```bash
 python main.py --datasets all
 ```
-All code was ran through VS Code 
+
 **At least two datasets must be selected for comparison.**
 
 ---
